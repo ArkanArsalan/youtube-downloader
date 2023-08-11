@@ -1,6 +1,7 @@
 import sys
 import argparse
 import re
+import os
 from pytube import YouTube
 
 
@@ -57,8 +58,17 @@ def download_video(link, location_path, resolution):
         sys.exit(f"Video doesn't support {resolution} resolution")
 
 
-def download_audio():
-    ...
+def download_audio(link, location_path):
+    audio = YouTube(link)
+
+    print("Title: ", audio.title)
+
+    audio_file = audio.streams.get_audio_only().download(location_path)
+
+    # Change format to mp3
+    filename, file_format = os.path.splitext(audio_file)
+    new_filename = filename + ".mp3"
+    os.rename(audio_file, new_filename)
 
 
 def main():
@@ -66,6 +76,9 @@ def main():
     
     if arguments.type == "video":
         download_video(arguments.link, arguments.location_path, arguments.resolution)
+    elif arguments.type == "audio":
+        download_audio(arguments.link, arguments.location_path)
+
 
 
 if __name__ == "__main__":
