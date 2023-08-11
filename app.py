@@ -1,6 +1,8 @@
 import sys
 import pytube
 import argparse
+import re
+
 
 # The name of this file could be the same in argparse library
 def parse_argument():
@@ -14,11 +16,25 @@ def parse_argument():
 
     arguments = parser.parse_args()
 
+    # Validate value of the type argument
+    if not validate_download_type(arguments.type):
+        sys.exit("Invalid download type")
+
+    # Validate the youtube link
+    if not validate_link(arguments.link):
+        sys.exit("Invalid link")
+
     return arguments
 
 
+def validate_download_type(s):
+    valid_type = ["video", "audio"]
+    return s in valid_type
+
+
 def validate_link(link):
-    ...
+    youtube_link_pattern = r"(?:(?:https|http)://)?(?:www.)?youtube.com/(\w+)"
+    return re.search(youtube_link_pattern, link)
 
 
 def download_video():
