@@ -1,5 +1,3 @@
-# YOUR PROJECT TITLE
-#### Video Demo:  <URL HERE>
 #### Description:
 
 Saving youtube video as an mp4 or mp3 (audio only) to your computer
